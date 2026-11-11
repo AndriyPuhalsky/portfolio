@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Андрій Пухальський — AI Automation Engineer: кейси</title>
+<meta name="description" content="Кейси AI-автоматизації: Telegram-бот AI-дайджестів, SMM-агент, serp-scout для iGaming, n8n (RAG, MCP, мультиагент) у Docker, AI Академія, автотести.">
+<style>
+  :root {
+    --bg: #f6f4ef; --surface: #ffffff; --ink: #17181c; --muted: #5d6068; --line: #dcd8cf;
+    --accent: #0b5d4e; --accent-soft: #e2efe9; --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111315; --surface: #191c1f; --ink: #ecebe7; --muted: #a0a4ab; --line: #2c3035; --accent: #6fd3b8; --accent-soft: #16302a; }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+  header.top { padding: 72px 0 40px; border-bottom: 1px solid var(--line); }
+  .eyebrow { font: 600 13px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 18px; }
+  h1 { font-size: clamp(34px, 6vw, 56px); line-height: 1.05; letter-spacing: -.02em; margin: 0 0 20px; text-wrap: balance; }
+  .lead { font-size: 20px; max-width: 46em; color: var(--muted); margin: 0 0 28px; }
+  .lead strong { color: var(--ink); font-weight: 600; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-block; padding: 12px 20px; border-radius: 8px; font-weight: 600; text-decoration: none; border: 1px solid var(--accent); }
+  .btn.primary { background: var(--accent); color: var(--bg); }
+  .btn.ghost { color: var(--accent); }
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 18px 0; font: 14px/1.4 var(--mono); border-bottom: 1px solid var(--line); }
+  nav.toc a { text-decoration: none; color: var(--muted); }
+  nav.toc a:hover { color: var(--accent); }
+  section { padding: 56px 0; border-bottom: 1px solid var(--line); }
+  h2 { font-size: clamp(26px, 4vw, 34px); line-height: 1.15; letter-spacing: -.01em; margin: 0 0 8px; text-wrap: balance; }
+  .kicker { font: 600 13px/1 var(--mono); color: var(--accent); letter-spacing: .06em; text-transform: uppercase; margin: 0 0 12px; }
+  .sub { color: var(--muted); margin: 0 0 28px; max-width: 44em; }
+  .grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 36px; align-items: start; }
+  @media (max-width: 780px) { .grid { grid-template-columns: 1fr; } header.top { padding-top: 48px; } }
+  h3 { font-size: 15px; font-family: var(--mono); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: 24px 0 8px; }
+  h3:first-child { margin-top: 0; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .stat { background: var(--surface); padding: 16px 18px; }
+  .stat b { display: block; font: 600 26px/1.1 var(--mono); color: var(--accent); font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 14px; color: var(--muted); }
+  .flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; margin: 8px 0 4px; font: 14px/1.35 var(--mono); }
+  .flow > div { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; flex: 1 1 150px; }
+  .flow > div b { display: block; color: var(--accent); font-weight: 600; margin-bottom: 2px; }
+  .flow > i { align-self: center; color: var(--muted); font-style: normal; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; padding: 0; list-style: none; }
+  .tags li { font: 13px/1 var(--mono); padding: 6px 9px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); margin: 0; }
+  figure { margin: 24px 0 0; }
+  figure img { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+  figcaption { font-size: 14px; color: var(--muted); margin-top: 8px; }
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 780px) { .shots { grid-template-columns: 1fr; } }
+  .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
+  .card h4 { margin: 0 0 6px; font-size: 18px; }
+  .card p { color: var(--muted); font-size: 15px; margin: 0; }
+  footer { padding: 48px 0 72px; }
+  footer .contacts { display: flex; flex-wrap: wrap; gap: 10px 28px; font-family: var(--mono); font-size: 15px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">AI Automation Engineer · Чернівці · віддалено</p>
+    <h1>Перетворюю ручні процеси на AI-автоматизації, які працюють без нагляду</h1>
+    <p class="lead">Я <strong>Андрій Пухальський</strong>. Будую LLM-агентів, інтеграції та конвеєри від вимог до production — з автотестами, лімітами витрат і людиною в контурі там, де помилка коштує дорого. Фундамент — QA Automation на Python і Playwright.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://t.me/puhalski">Написати в Telegram</a>
+      <a class="btn ghost" href="mailto:andriy.puhalsky@gmail.com">andriy.puhalsky@gmail.com</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/ander-sage">LinkedIn</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="toc" aria-label="Кейси">
+    <a href="#digest">01 Бот AI-дайджестів</a>
+    <a href="#smm">02 SMM-агент</a>
+    <a href="#serp">03 serp-scout для iGaming</a>
+    <a href="#n8n">04 n8n: RAG, MCP, мультиагент</a>
+    <a href="#courses">05 Конвеєр курсів</a>
+    <a href="#academy">06 AI Академія</a>
+    <a href="#qa">07 Автотести й повний цикл</a>
+    <a href="#services">Чим можу допомогти</a>
+  </nav>
+</div>
+
+<main>
+
+<section id="digest">
+  <div class="wrap">
+    <p class="kicker">Кейс 01 · аутсорс, 10/2026</p>
+    <h2>Telegram-бот AI-дайджестів новин і подкастів</h2>
+    <p class="sub">Щоб вести галузевий Telegram-канал, треба щодня переглядати десятки джерел. Бот збирає їх сам, групує в сюжети й готує чернетку — редактор лише схвалює.</p>
+    <div class="grid">
+      <div>
+        <h3>Як працює</h3>
+        <div class="flow">
+          <div><b>Збір</b>30 джерел: RSS, YouTube Data API, канали Telegram</div><i>→</i>
+          <div><b>Розбір</b>Gemini на Vertex AI: відео подкастів, кластеризація в сюжети</div><i>→</i>
+          <div><b>Текст</b>Claude Haiku пише дайджест, відповідь за JSON Schema</div><i>→</i>
+          <div><b>Модерація</b>редактор схвалює кнопками в Telegram</div><i>→</i>
+          <div><b>Публікація</b>бот постить у канал</div>
+        </div>
+        <h3>Рішення, які роблять його надійним</h3>
+        <ul>
+          <li>Дайджест пишеться лише із сюжетів, які підтвердили два й більше видань — менше шуму й вигадок.</li>
+          <li>Черга задач у D1 зі state machine і повторами при збоях зовнішніх API.</li>
+          <li>Денна стеля витрат: бюджет до $10 на місяць не може бути перевищений.</li>
+          <li>Людина в контурі: без схвалення редактора нічого не публікується.</li>
+        </ul>
+        <ul class="tags"><li>Cloudflare Workers</li><li>TypeScript</li><li>D1</li><li>Cron Triggers</li><li>Vertex AI</li><li>Anthropic API</li><li>Telegram Bot API</li><li>Vitest</li></ul>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>2 дні</b><span>від постановки задачі до production</span></div>
+        <div class="stat"><b>30</b><span>джерел щодня</span></div>
+        <div class="stat"><b>$0.17</b><span>витрати за перший день роботи</span></div>
+        <div class="stat"><b>322</b><span>автотести</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="smm">
+  <div class="wrap">
+    <p class="kicker">Кейс 02 · власний проєкт, з 10/2026</p>
+    <h2>Автономний SMM-агент для LinkedIn</h2>
+    <p class="sub">Від вибору теми до опублікованого поста з картинкою чи PDF-каруселлю — без ручної роботи, крім одного натискання «схвалити».</p>
+    <div class="grid">
+      <div>
+        <h3>Як працює</h3>
+        <div class="flow">
+          <div><b>Розклад</b>GitHub Actions пропонує тему</div><i>→</i>
+          <div><b>4 субагенти</b>тренди → ghostwriter → редактор → добір фото</div><i>→</i>
+          <div><b>Апрув</b>картка з кнопками в Telegram</div><i>→</i>
+          <div><b>Публікація</b>LinkedIn API: пости, фото, PDF-каруселі</div>
+        </div>
+        <h3>Guardrails</h3>
+        <ul>
+          <li>LLM працює лише над чернетками. Публікація, Telegram і стани — детерміновані скрипти.</li>
+          <li>5 перевірок у CI: межі запису, валідація за схемою, дедуплікація тем, stop-gate.</li>
+          <li>Ліміт бюджету на запуск і на місяць із журналом витрат.</li>
+        </ul>
+        <ul class="tags"><li>Claude Code headless</li><li>Anthropic API</li><li>JSON Schema</li><li>GitHub Actions</li><li>Cloudflare Worker</li><li>LinkedIn API · OAuth 2.0</li><li>Playwright</li><li>Node.js</li></ul>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>1 день</b><span>від ідеї до першого опублікованого поста</span></div>
+        <div class="stat"><b>~$0.2</b><span>вартість одного поста</span></div>
+        <div class="stat"><b>4</b><span>субагенти в конвеєрі</span></div>
+        <div class="stat"><b>72</b><span>офлайн-тести</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="serp">
+  <div class="wrap">
+    <p class="kicker">Кейс 03 · тестове завдання, 11/2026</p>
+    <h2>serp-scout: щоденний розбір SEO-видачі для маркетологів iGaming</h2>
+    <p class="sub">Маркетологу афіліат-команди треба знати, які сайти з топу Google беруть розміщення брендів і кому там писати. Інструмент щодня знімає видачу, а Claude розмічає кожну сторінку. Зроблено за день як тестове завдання — і працює далі сам.</p>
+    <figure style="margin:0 0 28px"><img src="img/serp-scout.jpg" alt="Сайт-звіт serp-scout: лічильники ключів, унікальних URL, релевантних сторінок, брендів і контактів та таблиця сайтів із фільтрами" loading="lazy" width="1440" height="653"><figcaption>Сайт-звіт для менеджера: фільтри за ключем, типом сторінки й брендом, історія позицій, пояснення моделі «чому».</figcaption></figure>
+    <div class="grid">
+      <div>
+        <h3>Як працює</h3>
+        <div class="flow">
+          <div><b>Видача</b>топ-10 Google (mobile, Канада) за 10 ключами через SerpApi</div><i>→</i>
+          <div><b>Сторінки</b>текст кожного унікального URL</div><i>→</i>
+          <div><b>Розмітка</b>Claude: тип сайту, релевантність, бренди, контакт</div><i>→</i>
+          <div><b>Історія</b>SQLite: позиції день за днем, без дублів</div><i>→</i>
+          <div><b>Звіт</b>сайт на Netlify і зведення в Telegram</div>
+        </div>
+        <h3>Що важливо</h3>
+        <ul>
+          <li>Платимо лише за нові URL: відповіді моделі кешуються, прогін зупиняється при перевищенні бюджету.</li>
+          <li>Збій однієї сторінки не валить прогін; секрети маскуються в логах.</li>
+          <li>До інструмента додано методичку для маркетолога зі скріншотами і презентацію для замовника.</li>
+        </ul>
+        <p style="margin-top:16px"><a href="https://serp-scout.netlify.app">Живий звіт →</a> &nbsp; <a href="https://serp-scout.netlify.app/guide/">Методичка →</a> &nbsp; <a href="https://github.com/AndriyPuhalsky/serp-scout">Код на GitHub →</a></p>
+        <ul class="tags"><li>Python</li><li>Anthropic API · structured output</li><li>SerpApi</li><li>SQLite</li><li>GitHub Actions</li><li>Netlify</li><li>pytest</li></ul>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>1 день</b><span>від завдання до зданого MVP</span></div>
+        <div class="stat"><b>~$0.54</b><span>середня вартість щоденного прогону</span></div>
+        <div class="stat"><b>60 із 79</b><span>сторінок першого прогону — релевантні для розміщення</span></div>
+        <div class="stat"><b>128</b><span>автотестів</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="n8n">
+  <div class="wrap">
+    <p class="kicker">Кейс 04 · n8n self-hosted у Docker</p>
+    <h2>n8n для AI-задач: RAG, MCP і мультиагентна оркестрація</h2>
+    <p class="sub">Набір робочих workflow на власному інстансі n8n у Docker Compose. Показує, як швидко зібрати AI-функцію без тижня «обв'язки» в коді — і як підключити її до Claude Code.</p>
+    <div class="shots">
+      <figure><img src="img/n8n-case1-rag.jpg" alt="Канвас n8n: індексація документів у векторне сховище і чат-агент з інструментом пошуку" loading="lazy" width="1600" height="1067"><figcaption><strong>RAG-чат над документами.</strong> Індексація: нарізка → embeddings → vector store. Чат: агент відповідає лише з документів і називає джерела.</figcaption></figure>
+      <figure><img src="img/n8n-case2a-mcp-server.jpg" alt="Канвас n8n: MCP Server Trigger з підключеними інструментами" loading="lazy" width="1600" height="911"><figcaption><strong>n8n як MCP-сервер.</strong> Інструменти для Claude Code: HTTP-запити, таблиці даних, код і готові sub-workflow.</figcaption></figure>
+      <figure><img src="img/n8n-case3-multi-agent.jpg" alt="Канвас n8n: агент-оркестратор із суб-агентами" loading="lazy" width="1600" height="978"><figcaption><strong>Мультиагент.</strong> Оркестратор роздає підзадачі суб-агентам і повертає структуровану відповідь.</figcaption></figure>
+    </div>
+    <div class="grid" style="margin-top:32px">
+      <div>
+        <h3>Що ще в наборі</h3>
+        <ul>
+          <li>LLM-пайплайн за розкладом: відгуки → тональність → тріаж → витяг полів → Telegram.</li>
+          <li>Дайджест RSS із LLM-саммарі в Telegram.</li>
+          <li>n8n як бекенд LLM-застосунку: webhook → модель → JSON за схемою.</li>
+          <li>Evaluations: регресійні тести для промптів на датасеті.</li>
+          <li>Error Workflow: сповіщення про будь-який збій.</li>
+        </ul>
+        <ul class="tags"><li>n8n</li><li>Docker Compose</li><li>AI Agent</li><li>Vector Store</li><li>MCP Server / Client</li><li>Ollama</li><li>Anthropic</li><li>Webhooks</li></ul>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>13</b><span>workflow у наборі</span></div>
+        <div class="stat"><b>87 стор.</b><span>власна методичка «n8n для AI-інженера»</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="courses">
+  <div class="wrap">
+    <p class="kicker">Кейс 05 · для агенції SEO і лінкбілдингу, 11/2026</p>
+    <h2>Конвеєр, що перетворює відеокурси на інтерактивне навчання</h2>
+    <p class="sub">Новим співробітникам агенції треба швидко зрозуміти нішу iGaming і лінкбілдинг, а найкращі матеріали — це години відео. Одна команда бере плейлист і видає готовий курс українською з квізами.</p>
+    <div class="grid">
+      <div>
+        <h3>Як працює</h3>
+        <div class="flow">
+          <div><b>Вхід</b>посилання на канал, плейлист або відео</div><i>→</i>
+          <div><b>Розбір</b>Gemini: розшифровка з таймкодами, конспект українською</div><i>→</i>
+          <div><b>Слайди</b>ключові кадри без кадрів із камерою</div><i>→</i>
+          <div><b>Курс</b>Word на кожен урок і навчальний HTML із квізами та підсумковим тестом</div>
+        </div>
+        <h3>Що важливо</h3>
+        <ul>
+          <li>Кожен крок кешується: повторний запуск коштує $0, а платний — лише після оцінки вартості й підтвердження.</li>
+          <li>Таймкоди в конспекті клікабельні — відкривають відео в потрібному місці.</li>
+          <li>Квізи перевіряють розуміння індустрії: типи iGaming-проєктів, що потрібно кожному і що може запропонувати агенція.</li>
+          <li>Зміст курсів внутрішній, тому тут показано лише сам конвеєр.</li>
+        </ul>
+        <ul class="tags"><li>Python</li><li>Gemini API</li><li>YouTube Data API</li><li>yt-dlp</li><li>python-docx</li><li>Claude Code · hooks</li><li>unittest</li></ul>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>4</b><span>курси: iGaming SEO і три з лінкбілдингу</span></div>
+        <div class="stat"><b>28</b><span>уроків</span></div>
+        <div class="stat"><b>81</b><span>питання в курсі iGaming SEO</span></div>
+        <div class="stat"><b>~$0.55</b><span>витрати на модель за курс із п'яти відеоуроків</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="academy">
+  <div class="wrap">
+    <p class="kicker">Кейс 06 · засновник, з 08/2026</p>
+    <h2>AI Академія — безкоштовна навчальна платформа</h2>
+    <p class="sub">Платформа українською про LLM, prompt engineering, Claude API, MCP та агентні системи. Зроблена з нуля до production мультиагентним конвеєром Claude Code.</p>
+    <div class="grid">
+      <div>
+        <h3>Що всередині</h3>
+        <ul>
+          <li>Квізи із серверною перевіркою відповідей і сертифікати з перевіркою за QR-кодом.</li>
+          <li>Конвеєр розробки: PM → backend і frontend паралельно → QA з колами виправлень; окремі агенти для контенту й рецензії.</li>
+        </ul>
+        <p style="margin-top:16px"><a href="https://ai-academia.com.ua">ai-academia.com.ua →</a></p>
+        <ul class="tags"><li>Supabase · Postgres · RLS</li><li>Edge Functions</li><li>Cloudflare Workers</li><li>Resend</li><li>Telegram-бот</li><li>Claude Code</li></ul>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>4</b><span>безкоштовні курси</span></div>
+        <div class="stat"><b>548</b><span>питань у квізах</span></div>
+        <div class="stat"><b>651</b><span>коміт за ~6 тижнів</span></div>
+        <div class="stat"><b>live</b><span>з 18.08.2026</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="qa">
+  <div class="wrap">
+    <p class="kicker">Кейс 07 · QA Automation і повний цикл розробки</p>
+    <h2>Автотести, які ловлять дефекти до релізу</h2>
+    <p class="sub">QA — моя перша спеціальність, тому в кожному AI-проєкті є тести, CI і перевірки даних.</p>
+    <div class="grid">
+      <div>
+        <h3>Фреймворк Python + Playwright</h3>
+        <p>З нуля для продуктової платформи: Page Object Model, регресія авторизації, OAuth/JWT, платежів і Checkout, REST API-тести. Багів на production стало на 30% менше.</p>
+        <p><a href="https://gitlab.com/AndriyPuhalsky/aqa_nml">Код фреймворка на GitLab →</a></p>
+        <h3>EPAM IT Marathon 2026 — застосунок онлайн-ресторану</h3>
+        <p>Повний цикл: user stories з acceptance criteria, макет у Figma, деплой в AWS через Terraform (26 ресурсів), REST API на C# / .NET, екран на Angular і фреймворк автотестів Reqnroll + Playwright .NET + Allure в CI.</p>
+        <p><a href="https://github.com/AndriyPuhalsky/green-and-tasty-marathon">Репозиторій на GitHub →</a></p>
+        <ul class="tags"><li>Python</li><li>Playwright</li><li>Pytest</li><li>C# / .NET</li><li>Reqnroll (BDD)</li><li>Allure</li><li>AWS · Terraform</li><li>GitHub Actions</li><li>Docker</li></ul>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>−30%</b><span>багів на production</span></div>
+        <div class="stat"><b>52</b><span>сценарії: 36 API + 16 UI</span></div>
+        <div class="stat"><b>6</b><span>дефектів знайшли автотести</span></div>
+        <div class="stat"><b>26</b><span>ресурсів AWS у Terraform</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <p class="kicker">Співпраця</p>
+    <h2>Чим можу допомогти</h2>
+    <p class="sub">Відкритий до роботи в команді (AI Automation Engineer, QA Automation, технічний Project Manager) і до проєктної роботи.</p>
+    <div class="services">
+      <div class="card"><h4>Автоматизація на n8n</h4><p>Заявки, CRM, звіти, сповіщення в Telegram, AI-кроки всередині процесу. Розгортання у вашому Docker.</p></div>
+      <div class="card"><h4>Telegram-бот з AI</h4><p>Дайджести, контент, відповіді клієнтам — з модерацією людиною і стелею витрат на модель.</p></div>
+      <div class="card"><h4>Звітність і дашборди</h4><p>Дані з Notion, Jira чи Google Sheets зводяться автоматично, про відхилення приходить сповіщення.</p></div>
+      <div class="card"><h4>Jira Automation</h4><p>Аудит і налаштування правил, шаблони епіків і user stories за єдиним стандартом.</p></div>
+      <div class="card"><h4>Автотести Python + Playwright</h4><p>Фреймворк з нуля, регресія критичних сценаріїв, запуск у CI.</p></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="kicker">Контакти</p>
+    <div class="contacts">
+      <a href="https://t.me/puhalski">Telegram @puhalski</a>
+      <a href="mailto:andriy.puhalsky@gmail.com">andriy.puhalsky@gmail.com</a>
+      <a href="https://www.linkedin.com/in/ander-sage">linkedin.com/in/ander-sage</a>
+      <a href="https://ai-academia.com.ua">ai-academia.com.ua</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
