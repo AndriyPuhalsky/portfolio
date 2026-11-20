@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Андрій Пухальський — AI Automation Engineer: кейси</title>
-<meta name="description" content="Кейси AI-автоматизації: Telegram-бот AI-дайджестів, SMM-агент, serp-scout для iGaming, n8n (RAG, MCP, мультиагент) у Docker, AI Академія, автотести, диплом EPAM IT Marathon 6.0.">
+<meta name="description" content="Кейси AI-автоматизації: Telegram-бот AI-дайджестів, SMM-агент, serp-scout для iGaming, n8n (RAG, MCP, мультиагент) у Docker, бот пошуку донорів для лінкбілдингу на n8n, AI Академія, автотести, диплом EPAM IT Marathon 6.0.">
 <style>
   :root {
     --bg: #f6f4ef; --surface: #ffffff; --ink: #17181c; --muted: #5d6068; --line: #dcd8cf;
@@ -88,8 +88,9 @@
     <a href="#serp">03 serp-scout для iGaming</a>
     <a href="#n8n">04 n8n: RAG, MCP, мультиагент</a>
     <a href="#courses">05 Конвеєр курсів</a>
-    <a href="#academy">06 AI Академія</a>
-    <a href="#qa">07 Автотести й повний цикл</a>
+    <a href="#donors">06 Бот пошуку донорів</a>
+    <a href="#academy">07 AI Академія</a>
+    <a href="#qa">08 Автотести й повний цикл</a>
     <a href="#services">Чим можу допомогти</a>
   </nav>
 </div>
@@ -260,9 +261,48 @@
   </div>
 </section>
 
+<section id="donors">
+  <div class="wrap">
+    <p class="kicker">Кейс 06 · для агенції SEO і лінкбілдингу, 11/2026</p>
+    <h2>Бот, що шукає сайти для лінкбілдингу й готує перший лист</h2>
+    <p class="sub">Ресерчер агенції збирав список сайтів для розміщення руками: пошук, метрики, перевірка кожного сайту. Бот під портрет проєкту сам знаходить нові сайти, відсіює явно непридатні й віддає список із джерелом і примітками в кожному рядку. Для прийнятих сайтів він бере пошту й пише персональний перший лист.</p>
+    <figure style="margin:0 0 28px"><img src="img/donor-bot-map.jpg" alt="Схема бота у два ряди: портрет, пошук, відсів, партія, рішення ресерчера; далі прийняті сайти, ніші, пошти, перший лист, аркуш з листами" loading="lazy" width="1220" height="590"><figcaption>Карта процесу з презентації для замовника: верхній ряд дає ресерчеру список, нижній веде від рішення «так» до готового листа.</figcaption></figure>
+    <div class="grid">
+      <div>
+        <h3>Як працює</h3>
+        <div class="flow">
+          <div><b>Портрет</b>рядок у Google-таблиці: гео, пороги, теми, конкуренти</div><i>→</i>
+          <div><b>Пошук</b>6 каналів: Ahrefs API, видача Google, біржі, схожі на вже прийняті</div><i>→</i>
+          <div><b>Відсів</b>5 фільтрів від безкоштовного до платного; сайт читає Claude</div><i>→</i>
+          <div><b>Партія</b>Google Sheets: ресерчер ставить «так» або «ні», рішення щогодини вертаються в бот</div><i>→</i>
+          <div><b>Лист</b>ніша, пошта й перший лист; надсилає людина</div>
+        </div>
+        <h3>Рішення, які роблять його надійним</h3>
+        <ul>
+          <li>Ключ Ahrefs спільний з CRM замовника, тому кожен запит іде через одну обгортку з лімітом прогону, загальним лімітом і журналом витрат.</li>
+          <li>Факт про домен купується один раз: метрики, перевірка сайту й пошта кешуються в Postgres.</li>
+          <li>Бот відсіює лише явне. Сайт, який не вдалося відкрити, іде до людини з приміткою, а збій на одному сайті не зупиняє прогін.</li>
+          <li>Лист перевіряє код (обсяг, будова, заборонені слова, повтор теми) і один раз повертає моделі на переписування.</li>
+          <li>У workflow немає ключів та ID: усе читається з таблиці налаштувань, тож інша людина розгортає систему однією командою.</li>
+          <li>Проєкт передано команді замовника разом з презентацією, картою процесу й методичкою на дев'ять сторінок. Дані клієнтів внутрішні, тому тут показано лише схему.</li>
+        </ul>
+        <ul class="tags"><li>n8n</li><li>Docker Compose</li><li>PostgreSQL</li><li>Ahrefs API</li><li>Anthropic API · structured output</li><li>Google Sheets API</li><li>Telegram Bot API</li><li>Snov API</li><li>Node.js test runner</li></ul>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>4 дні</b><span>від каркаса до передачі на сервері замовника</span></div>
+        <div class="stat"><b>25</b><span>етапів процесу в production</span></div>
+        <div class="stat"><b>78</b><span>workflow n8n, разом із тестовими</span></div>
+        <div class="stat"><b>65</b><span>автотестів на код вузлів</span></div>
+        <div class="stat"><b>20% → 7%</b><span>сайтів, які бот не зміг відкрити, до і після доробок</span></div>
+        <div class="stat"><b>~$0.02</b><span>вартість одного першого листа</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="academy">
   <div class="wrap">
-    <p class="kicker">Кейс 06 · засновник, з 08/2026</p>
+    <p class="kicker">Кейс 07 · засновник, з 08/2026</p>
     <h2>AI Академія — безкоштовна навчальна платформа</h2>
     <p class="sub">Платформа українською про LLM, prompt engineering, Claude API, MCP та агентні системи. Зроблена з нуля до production мультиагентним конвеєром Claude Code.</p>
     <div class="grid">
@@ -287,7 +327,7 @@
 
 <section id="qa">
   <div class="wrap">
-    <p class="kicker">Кейс 07 · QA Automation і повний цикл розробки</p>
+    <p class="kicker">Кейс 08 · QA Automation і повний цикл розробки</p>
     <h2>Автотести, які ловлять дефекти до релізу</h2>
     <p class="sub">QA — моя перша спеціальність, тому в кожному AI-проєкті є тести, CI і перевірки даних.</p>
     <div class="grid">
